@@ -5,24 +5,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      function validateUid(){
+        var uid = document.myform.uid.value;
+        if(isNaN(uid) || uid.length != 10){
+          alert("User ID must be 10 digit number");
+          document.myform.uid.focus();
+          document.myform.uid.style.backgroundColor = "red";
+          return false;
+        }
+        else {
+          document.myform.uid.style.backgroundColor = "white";
+          return true;
+        }
+      }
+      function validateForm(){
+        if(validateUid() == false){
+          return false;
+        }
+        
+
+
+        var name = document.myform.name.value;
+        if(name == ""){
+          alert("Name must be filled out");
+          return false;
+        }
+
+        var pcode = document.myform.pcode.value;
+        let postRegEx = /^[A-Z]{1,2}[0-9][0-9A-Z]?\s[0-9][A-Z]{2}$/;
+        if(!postRegEx.test(pcode)){
+          alert("Post Code must be valid");
+          return false;
+        }
+
+        return true;
+      }
+    </script>
   </head>
   <body>
     <header class="bg-blue-700 text-white h-16 container mx-auto">
       Header Block
     </header> 
-    <div class="container mx-auto flex h-[calc(100vh-128px)]">
-      <nav class="w-1/6 bg-green-500">
+    <div class="container mx-auto sm:flex h-[calc(100vh-128px)]">
+      <nav class="w-full sm:w-1/6 bg-green-500">
         Left Navigation
       </nav>
-      <main class="w-2/3 bg-gray-500">
+      <main id="main" class="w-full sm:w-2/3 bg-gray-500">
         Main Content
+        <form name="myform">
+          <label for="uid">User ID:</label>
+          <input type="text" name="uid" id="uid" onchange="validateUid()">
+          <br />
+          <label for="name">Name:</label>
+          <input type="text" name="name" id="name">
+          <br />
+          <label for="pcode">Post Code</label>
+          <input type="text" name="pcode" id="pcode">
+          <br />
+          <input type="button" value="Submit" onclick="validateForm()">
+        </form>
+
       </main>
-      <nav class="w-1/6 bg-yellow-500">
+      <nav class="w-full sm:w-1/6 bg-yellow-500">
         Right Navigation  
       </nav>
   </div>
     <footer class="bg-red-700 text-white h-16 container mx-auto">
       Footer Block
     </footer>
+    
   </body>
 </html>
